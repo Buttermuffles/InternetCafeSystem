@@ -27,14 +27,70 @@ html.light {
     --bg-primary: #f8fafc;
     --bg-secondary: #e2e8f0;
     --clay-bg: #ffffff;
-    --clay-border: rgba(148, 163, 184, 0.4);
+    --clay-border: rgba(148, 163, 184, 0.45);
     --clay-shadow: rgba(148, 163, 184, 0.25);
     --text-main: #0f172a;
     --card-text: #0f172a;
-    --btn-bg: #f1f5f9;
+    --label-text: #334155;
+    --muted-text: #64748b;
+    --btn-bg: #edf2f7;
     --btn-text: #0f172a;
     --btn-border: rgba(148, 163, 184, 0.35);
 }
+
+html.light .text-white {
+    color: var(--text-main) !important;
+}
+
+html.light .text-slate-300,
+html.light .text-slate-400,
+html.light .text-slate-500,
+html.light .text-slate-200 {
+    color: var(--muted-text) !important;
+}
+
+html.light .text-slate-900,
+html.light .text-slate-800,
+html.light .text-slate-700,
+html.light .text-slate-600,
+html.light .text-slate-500 {
+    color: var(--text-main) !important;
+}
+
+html.light .bg-slate-900\/70,
+html.light .bg-slate-800,
+html.light .bg-slate-950,
+html.light .bg-slate-900,
+html.light .bg-slate-700 {
+    background-color: rgba(244, 247, 255, 0.95) !important;
+}
+
+html.light .bg-indigo-500\/5,
+html.light .bg-indigo-600,
+html.light .bg-indigo-500 {
+    background-color: rgba(224, 231, 255, 0.65) !important;
+}
+
+html.light .bg-white\/10,
+html.light .bg-black\/60,
+html.light .bg-black\/20,
+html.light .bg-black\/40,
+html.light .bg-black\/50,
+html.light .bg-black\/70 {
+    background-color: rgba(255, 255, 255, 0.7) !important;
+}
+
+html.light .border-white\/5,
+html.light .border-white\/10,
+html.light .border-white\/20,
+html.light .border-white\/30 {
+    border-color: rgba(100, 116, 139, 0.35) !important;
+}
+
+html.light .bg-slate-900\/80 {
+    background-color: #f1f5f9 !important;
+}
+
 
 body.dark {
     background: radial-gradient(circle at 50% 0%, #1e293b 0%, #0f172a 100%);
