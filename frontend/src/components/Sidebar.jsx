@@ -31,7 +31,7 @@ function Sidebar({ pcs, handleCommand, showToast, currentPage, setCurrentPage })
                         <li>
                             <button
                                 onClick={() => setCurrentPage('dashboard')}
-                                className={`w-full flex items-center gap-4 p-4 rounded-[1.5rem] transition-all ${currentPage === 'dashboard' ? 'bg-indigo-500/20 text-indigo-200 border border-indigo-400' : 'text-indigo-400 bg-indigo-500/5 border border-indigo-500/10'}`}
+                                className={`sidebar-button w-full flex items-center gap-4 p-4 rounded-[1.5rem] transition-all ${currentPage === 'dashboard' ? 'active bg-indigo-500/20 text-indigo-200 border border-indigo-400' : 'text-indigo-400 bg-indigo-500/5 border border-indigo-500/10'}`}
                             >
                                 <LayoutDashboard size={20} />
                                 <span className="font-bold text-sm">Dashboard</span>
@@ -40,7 +40,7 @@ function Sidebar({ pcs, handleCommand, showToast, currentPage, setCurrentPage })
                         <li>
                             <button
                                 onClick={() => setCurrentPage('system')}
-                                className={`w-full flex items-center gap-4 p-4 rounded-[1.5rem] transition-all ${currentPage === 'system' ? 'bg-sky-500/20 text-sky-200 border border-sky-400' : 'text-slate-500 hover:text-white hover:bg-white/5'}`}
+                                className={`sidebar-button w-full flex items-center gap-4 p-4 rounded-[1.5rem] transition-all ${currentPage === 'system' ? 'active bg-sky-500/20 text-sky-200 border border-sky-400' : 'text-slate-500 hover:text-white hover:bg-white/5'}`}
                             >
                                 <Settings size={20} />
                                 <span className="font-bold text-sm">System Prefs</span>
@@ -49,7 +49,7 @@ function Sidebar({ pcs, handleCommand, showToast, currentPage, setCurrentPage })
                         <li>
                             <button
                                 onClick={() => setCurrentPage('terminal')}
-                                className={`w-full flex items-center gap-4 p-4 rounded-[1.5rem] transition-all ${currentPage === 'terminal' ? 'bg-emerald-500/20 text-emerald-200 border border-emerald-400' : 'text-slate-500 hover:text-white hover:bg-white/5'}`}
+                                className={`sidebar-button w-full flex items-center gap-4 p-4 rounded-[1.5rem] transition-all ${currentPage === 'terminal' ? 'active bg-emerald-500/20 text-emerald-200 border border-emerald-400' : 'text-slate-500 hover:text-white hover:bg-white/5'}`}
                             >
                                 <Terminal size={20} />
                                 <span className="font-bold text-sm">Terminal Activity</span>
