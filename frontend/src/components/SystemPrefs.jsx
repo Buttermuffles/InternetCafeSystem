@@ -14,11 +14,9 @@ function SystemPrefs() {
 
     const handleSave = (e) => {
         e.preventDefault();
-        localStorage.setItem('icafe_api_url', apiUrl);
-        localStorage.setItem('icafe_api_key', apiKey);
         localStorage.setItem('icafe_poll_interval', String(pollInterval));
-        localStorage.setItem('icafe_pusher_key', pusherKey);
-        localStorage.setItem('icafe_pusher_cluster', pusherCluster);
+        localStorage.setItem('icafe_theme', theme);
+        localStorage.setItem('icafe_show_offline', String(showOffline));
         setMessage('System preferences saved locally. Reload to apply.');
     };
 
