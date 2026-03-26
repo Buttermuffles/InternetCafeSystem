@@ -117,3 +117,48 @@ npm run install-service
 This registers "ICafe Monitoring Agent" on the system, which starts automatically on boot in the background!
 
 *To uninstall later:* `npm run uninstall-service`
+
+---
+
+## 🧩 Git Remote + Commit + Push Flow
+
+### Step 1: Create repository on GitHub
+- Open: https://github.com/new
+- Name: `InternetCafeSystem`
+- Set Public/Private and create repository.
+
+### Step 2: Set remote in local project
+```bash
+cd "C:\Users\johnx\OneDrive\Documents\PROJECTS\InternetCafeSystem"
+# if not already configured
+git remote add origin https://github.com/Buttermuffles/InternetCafeSystem.git
+```
+
+### Step 3: Commit existing local files
+```bash
+git add .
+git commit -m "Initial commit - full project"
+```
+
+### Step 4: Push to GitHub
+```bash
+git push -u origin master
+# or if default branch is main:
+# git push -u origin main
+```
+
+### Step 5: Verify remote state
+```bash
+git remote -v
+git log --oneline -n 5
+```
+
+---
+
+## 🚀 Optional: create GitHub repo + push with GitHub CLI
+```bash
+gh repo create Buttermuffles/InternetCafeSystem --public --source . --remote origin --push
+```
+
+If you get `repository not found`, confirm the remote exists at https://github.com/Buttermuffles/InternetCafeSystem and repeat push commands.
+
