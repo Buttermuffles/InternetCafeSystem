@@ -36,6 +36,11 @@ body {
     overflow-x: hidden;
 }
 
+:root {
+    --scroll-thumb: rgba(96, 165, 250, 0.35); /* defaults to sky accent */
+    --scroll-thumb-hover: rgba(96, 165, 250, 0.55);
+}
+
 /* Scrollbar Styling */
 ::-webkit-scrollbar {
     width: 8px;
@@ -46,15 +51,17 @@ body {
     background: transparent;
 }
 
-::-webkit-scrollbar-thumb {
-    background: rgba(255, 255, 255, 0.1);
+::-webkit-scrollbar-thumb,
+.custom-scrollbar::-webkit-scrollbar-thumb {
+    background: var(--scroll-thumb);
     border-radius: 20px;
     border: 2px solid transparent;
     background-clip: content-box;
 }
 
-::-webkit-scrollbar-thumb:hover {
-    background: rgba(255, 255, 255, 0.2);
+::-webkit-scrollbar-thumb:hover,
+.custom-scrollbar::-webkit-scrollbar-thumb:hover {
+    background: var(--scroll-thumb-hover);
 }
 
 /* ============================================================
