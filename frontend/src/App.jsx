@@ -47,12 +47,22 @@ function App() {
 
     // Toast notification
     const [toast, setToast] = useState(null);
+    const [terminalLogs, setTerminalLogs] = useState([]);
 
     const videoPollTimerRef = useRef(null);
     const pusherRef = useRef(null);
 
+    const addTerminalLog = useCallback((entry) => {
+        const timestamp = new Date().toLocaleTimeString();
+        setTerminalLogs((prev) => {
+            const next = [{ timestamp, entry }, ...prev];
+            return next.slice(0, 50);
+        });
+    }, []);
+
     // ---- Data Fetching ----
     const loadPcs = useCallback(async () => {
+        addTerminalLog('API FETCH /api/pcs (poll)');
         try {
             // For low-spec computers, avoid downloading base64 screenshots on every poll.
             const result = await fetchPcs(false);
@@ -60,14 +70,16 @@ function App() {
                 setPcs(result.data);
                 setLastUpdate(new Date());
                 setError(null);
+                addTerminalLog(`FETCH result: ${result.data.length} PCs`);
             }
         } catch (err) {
             setError('ICafe Hub is unreachable. Retrying...');
+            addTerminalLog('FETCH error: ICafe Hub unreachable');
             console.error('Failed to fetch PCs:', err);
         } finally {
             setLoading(false);
         }
-    }, []);
+    }, [addTerminalLog]);
 
     useEffect(() => {
         let cancelled = false;
@@ -167,6 +179,7 @@ function App() {
             const channel = pusher.subscribe('pcs');
             const handler = (data) => {
                 if (!data || !data.pc_name) return;
+                addTerminalLog(`PUSHER PcUpdated: ${data.pc_name} status=${data.status || 'unknown'}`);
                 setPcs((prev) => {
                     const idx = prev.findIndex((p) => p.pc_name === data.pc_name);
                     if (idx === -1) return [...prev, { ...data }];
@@ -191,7 +204,7 @@ function App() {
             }
             pusherRef.current = null;
         };
-    }, []);
+    }, [addTerminalLog]);
 
     const handleFetchProcesses = async (pcName) => {
         try {
@@ -246,16 +259,20 @@ function App() {
 
     // ---- Command Handlers ----
     const handleCommand = async (pcName, commandType, commandData = null) => {
+        addTerminalLog(`COMMAND ${commandType} sent to ${pcName}${commandData ? ` (${commandData})` : ''}`);
         try {
             const result = await sendCommand(pcName, commandType, commandData);
             if (result.status === 'success') {
                 showToast(`✓ Command [${commandType}] dispatched to ${pcName}`);
+                addTerminalLog(`COMMAND result: ${commandType} -> success`);
             } else {
                 showToast(`✗ Error: ${result.message}`, 'error');
+                addTerminalLog(`COMMAND result: ${commandType} -> error`);
             }
         } catch (err) {
             const errorMsg = err.response?.data?.message || err.message;
             showToast(`✗ Failed to reach agent: ${errorMsg}`, 'error');
+            addTerminalLog(`COMMAND result: ${commandType} -> failed: ${errorMsg}`);
         }
     };
 
@@ -573,6 +590,29 @@ function App() {
                             >
                                 <Power size={12} /> Shutdown {selectedPcs.length || 'All'}
                             </button>
+                        </div>
+                    </div>
+                </div>
+
+                <div className="max-w-[1700px] mx-auto px-4 sm:px-6 mb-6">
+                    <div className="clay-card-flat bg-slate-900/70 border border-white/10 p-4 h-64 overflow-auto">
+                        <div className="flex items-center justify-between mb-3">
+                            <h2 className="text-sm font-black text-white uppercase tracking-wider">Terminal Activity</h2>
+                            <span className="text-[10px] text-slate-400 uppercase tracking-widest">Last 50 events</span>
+                        </div>
+                        <div className="bg-black/30 rounded-xl p-2 h-[calc(100%-1.25rem)] overflow-y-auto">
+                            {terminalLogs.length === 0 ? (
+                                <p className="text-[11px] text-slate-500">No terminal calls or fetch events yet.</p>
+                            ) : (
+                                <ul className="space-y-1 text-[11px] font-mono text-slate-300">
+                                    {terminalLogs.map((log, idx) => (
+                                        <li key={idx} className="flex justify-between gap-2">
+                                            <span className="text-slate-400">[{log.timestamp}]</span>
+                                            <span className="truncate">{log.entry}</span>
+                                        </li>
+                                    ))}
+                                </ul>
+                            )}
                         </div>
                     </div>
                 </div>
