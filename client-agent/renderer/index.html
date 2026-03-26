@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>ICafe Monitor Agent</title>
+    <link rel="stylesheet" href="styles.css" />
+</head>
+
+<body>
+    <!-- Custom Title Bar -->
+    <div class="titlebar" id="titlebar">
+        <div class="titlebar-left">
+            <span class="titlebar-icon">☕</span>
+            <span class="titlebar-title">ICafe Monitor Agent</span>
+            <span class="version-badge">v2.0</span>
+        </div>
+        <div class="titlebar-controls">
+            <button class="tb-btn tb-minimize" id="btn-minimize" title="Minimize">─</button>
+            <button class="tb-btn tb-tray" id="btn-tray" title="Minimize to Tray">⬇</button>
+            <button class="tb-btn tb-close" id="btn-close" title="Close to Tray">✕</button>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <div class="app-container">
+        <!-- Dashboard Header -->
+        <div class="dashboard-header">
+            <div class="status-chip" id="status-banner">
+                <div class="status-dot" id="status-dot"></div>
+                <span class="status-text" id="status-text">Disconnected</span>
+            </div>
+            <div class="header-stats">
+                <span id="heartbeat-count"></span>
+            </div>
+        </div>
+
+        <div class="grid-layout">
+            <!-- Server Connection Card -->
+            <div class="card card-connection">
+                <div class="card-header">
+                    <span class="card-icon">🌐</span>
+                    <h2>Connectivity</h2>
+                    <div class="toggle-group" title="Auto-connect when app starts">
+                        <label class="switch">
+                            <input type="checkbox" id="auto-connect-toggle" checked>
+                            <span class="slider round"></span>
+                        </label>
+                        <span class="toggle-label">Auto</span>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <div class="input-row">
+                        <div class="input-group flex-2">
+                            <label for="server-ip">Server IP</label>
+                            <input type="text" id="server-ip" placeholder="192.168.1.200" />
+                        </div>
+                        <div class="input-group flex-1">
+                            <label for="server-port">Port</label>
+                            <input type="text" id="server-port" placeholder="8000" />
+                        </div>
+                    </div>
+                    <div class="input-group">
+                        <label for="pc-name">PC Alias</label>
+                        <input type="text" id="pc-name" placeholder="Leave empty for hostname" />
+                    </div>
+                    <div class="button-row">
+                        <button class="btn btn-primary" id="btn-connect">
+                            <span class="btn-icon">⚡</span> Start Agent
+                        </button>
+                        <button class="btn btn-danger" id="btn-disconnect" style="display:none">
+                            <span class="btn-icon">⏹</span> Stop Agent
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- PC Info Card -->
+            <div class="card card-status">
+                <div class="card-header">
+                    <span class="card-icon">📊</span>
+                    <h2>System Status</h2>
+                    <button class="btn-refresh" id="btn-refresh-info" title="Refresh">↻</button>
+                </div>
+                <div class="card-body">
+                    <div class="meter-grid">
+                        <div class="meter-card">
+                            <div class="meter-header">
+                                <span class="meter-label">Processor</span>
+                                <span class="meter-value" id="cpu-value">0%</span>
+                            </div>
+                            <div class="meter-bar">
+                                <div class="meter-fill meter-fill-cpu" id="cpu-bar" style="transform: scaleX(0)"></div>
+                            </div>
+                        </div>
+                        <div class="meter-card">
+                            <div class="meter-header">
+                                <span class="meter-label">Memory</span>
+                                <span class="meter-value" id="ram-value">0%</span>
+                            </div>
+                            <div class="meter-bar">
+                                <div class="meter-fill meter-fill-ram" id="ram-bar" style="transform: scaleX(0)"></div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="info-tags">
+                        <div class="tag">
+                            <span class="tag-label">Host:</span>
+                            <span class="tag-value" id="info-hostname">—</span>
+                        </div>
+                        <div class="tag">
+                            <span class="tag-label">LAN IP:</span>
+                            <span class="tag-value" id="info-ip">—</span>
+                        </div>
+                        <div class="tag">
+                            <span class="tag-label">Net:</span>
+                            <span class="tag-value" id="info-adapter">—</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Network / Static IP Card -->
+            <div class="card card-network">
+                <div class="card-header">
+                    <span class="card-icon">📌</span>
+                    <h2>Static IP Setup</h2>
+                </div>
+                <div class="card-body">
+                    <div class="network-form">
+                        <div class="input-group">
+                            <label for="static-ip">Assigned Static IP</label>
+                            <input type="text" id="static-ip" placeholder="192.168.1.101" />
+                        </div>
+                        <div class="input-row">
+                            <div class="input-group">
+                                <label for="subnet-mask">Subnet</label>
+                                <input type="text" id="subnet-mask" value="255.255.255.0" />
+                            </div>
+                            <div class="input-group">
+                                <label for="gateway">Gateway</label>
+                                <input type="text" id="gateway" value="192.168.1.1" />
+                            </div>
+                        </div>
+                        <div class="input-row">
+                            <div class="input-group">
+                                <label for="dns1">Primary DNS</label>
+                                <input type="text" id="dns1" value="8.8.8.8" />
+                            </div>
+                            <div class="input-group">
+                                <label for="dns2">Secondary</label>
+                                <input type="text" id="dns2" value="8.8.4.4" />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="button-row">
+                        <button class="btn btn-accent" id="btn-set-static">
+                             Save & Apply
+                        </button>
+                        <button class="btn btn-outline" id="btn-set-dhcp">
+                             Restore DHCP
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Toast Container -->
+        <div class="toast-container" id="toast-container"></div>
+    </div>
+
+    <script src="renderer.js"></script>
+</body>
+
+</html>

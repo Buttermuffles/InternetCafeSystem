@@ -1,0 +1,14 @@
+{
+    "serverUrl": "http://192.168.1.200:8000",
+    "apiKey": "icafe-monitor-api-key-2024-secure-token-abc123xyz",
+    "pcName": "",
+    "heartbeatInterval": 4000,
+    "commandPollInterval": 2500,
+    "enableScreenshot": true,
+    "screenshotIntervalMs": 15000,
+    "screenshotQuality": 40,
+    "screenshotWidth": 640,
+    "requestTimeout": 5000,
+    "maxRetries": 3,
+    "retryDelay": 2000
+}

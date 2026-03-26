@@ -1,0 +1,56 @@
+{
+    "name": "icafe-client-agent",
+    "version": "2.0.0",
+    "description": "Internet Café Monitoring System - Client Agent with GUI",
+    "main": "main.js",
+    "scripts": {
+        "start": "electron .",
+        "agent-only": "node agent.js",
+        "build": "electron-builder --win portable",
+        "build-nsis": "electron-builder --win nsis"
+    },
+    "dependencies": {
+        "axios": "^1.6.0",
+        "ffmpeg-static": "^5.3.0",
+        "pusher-js": "^8.4.3",
+        "screenshot-desktop": "^1.15.0",
+        "sharp": "^0.33.0",
+        "systeminformation": "^5.21.0",
+        "wrtc": "^0.4.7"
+    },
+    "devDependencies": {
+        "electron": "^28.0.0",
+        "electron-builder": "^24.9.0",
+        "node-pre-gyp": "^0.17.0"
+    },
+    "build": {
+        "appId": "com.icafe.monitor.agent",
+        "productName": "ICafe Monitor Agent",
+        "win": {
+            "target": "portable",
+            "icon": "assets/icon.png",
+            "requestedExecutionLevel": "requireAdministrator"
+        },
+        "portable": {
+            "artifactName": "ICafeAgent.exe"
+        },
+        "files": [
+            "main.js",
+            "preload.js",
+            "agent-core.js",
+            "config.js",
+            "renderer/**/*",
+            "assets/**/*",
+            "node_modules/ffmpeg-static/**",
+            "!node_modules/.cache"
+        ],
+        "extraResources": [],
+        "asar": true,
+        "asarUnpack": [
+            "node_modules/ffmpeg-static/**",
+            "node_modules/wrtc/**"
+        ]
+    },
+    "author": "ICafe Monitor",
+    "license": "MIT"
+}
