@@ -177,25 +177,40 @@ body {
 
 /* Scrollbar Styling */
 ::-webkit-scrollbar {
-    width: 8px;
-    height: 8px;
+    width: 10px;
+    height: 10px;
 }
 
 ::-webkit-scrollbar-track {
-    background: transparent;
+    background: #f5f5f5;
 }
 
 ::-webkit-scrollbar-thumb,
-.custom-scrollbar::-webkit-scrollbar-thumb {
-    background: var(--scroll-thumb);
-    border-radius: 20px;
-    border: 2px solid transparent;
-    background-clip: content-box;
+.custom-scrollbar::-webkit-scrollbar-thumb,
+html.light ::-webkit-scrollbar-thumb,
+body.light ::-webkit-scrollbar-thumb {
+    background: #cbd5e1 !important;
+    border-radius: 999px;
+    border: 2px solid #f5f5f5;
+    background-clip: padding-box;
 }
 
 ::-webkit-scrollbar-thumb:hover,
-.custom-scrollbar::-webkit-scrollbar-thumb:hover {
-    background: var(--scroll-thumb-hover);
+.custom-scrollbar::-webkit-scrollbar-thumb:hover,
+html.light ::-webkit-scrollbar-thumb:hover,
+body.light ::-webkit-scrollbar-thumb:hover {
+    background: #94a3b8 !important;
+}
+
+/* Firefox support */
+* {
+    scrollbar-width: thin;
+    scrollbar-color: #cbd5e1 #f5f5f5;
+}
+
+.custom-scrollbar {
+    scrollbar-width: thin;
+    scrollbar-color: #cbd5e1 #f5f5f5;
 }
 
 /* ============================================================
