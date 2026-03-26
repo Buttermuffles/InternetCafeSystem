@@ -26,11 +26,14 @@
 html.light {
     --bg-primary: #f8fafc;
     --bg-secondary: #e2e8f0;
-    --clay-bg: #f1f5f9;
-    --clay-border: rgba(148, 163, 184, 0.5);
-    --clay-shadow: rgba(148, 163, 184, 0.3);
+    --clay-bg: #ffffff;
+    --clay-border: rgba(148, 163, 184, 0.4);
+    --clay-shadow: rgba(148, 163, 184, 0.25);
     --text-main: #0f172a;
-    --card-text: #1e293b;
+    --card-text: #0f172a;
+    --btn-bg: #f1f5f9;
+    --btn-text: #0f172a;
+    --btn-border: rgba(148, 163, 184, 0.35);
 }
 
 body.dark {
@@ -114,6 +117,19 @@ body {
         color: var(--card-text);
     }
 
+    html.light .clay-card,
+    body.light .clay-card,
+    html.light .clay-card-flat,
+    body.light .clay-card-flat {
+        background: var(--clay-bg) !important;
+        border-color: var(--clay-border) !important;
+        box-shadow:
+            8px 8px 18px var(--clay-shadow),
+            inset -2px -2px 8px rgba(255, 255, 255, 0.9),
+            inset 2px 2px 8px rgba(148, 163, 184, 0.35);
+        color: var(--card-text) !important;
+    }
+
     .clay-card:hover {
         transform: translateY(-5px) scale(1.01);
         box-shadow:
@@ -169,11 +185,21 @@ body {
             4px 4px 8px rgba(0, 0, 0, 0.3),
             inset -2px -2px 4px rgba(0, 0, 0, 0.2),
             inset 2px 2px 4px rgba(255, 255, 255, 0.05);
+        background: var(--btn-bg);
+        color: var(--btn-text);
+        border: 1px solid var(--btn-border);
     }
 
     .clay-btn:hover {
         transform: translateY(-2px);
         filter: brightness(1.15);
+    }
+
+    html.light .clay-btn, body.light .clay-btn {
+        box-shadow:
+            3px 3px 7px rgba(145, 158, 171, 0.35),
+            inset -1px -1px 3px rgba(255, 255, 255, 0.85),
+            inset 1px 1px 3px rgba(148, 163, 184, 0.25);
     }
 
     .clay-btn:active {
