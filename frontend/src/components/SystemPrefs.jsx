@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 
-function SystemPrefs() {
+function SystemPrefs({ onThemeChange }) {
     const [pollInterval, setPollInterval] = useState(8000);
     const [theme, setTheme] = useState('dark');
     const [showOffline, setShowOffline] = useState(true);
@@ -18,6 +18,7 @@ function SystemPrefs() {
         localStorage.setItem('icafe_theme', theme);
         localStorage.setItem('icafe_show_offline', String(showOffline));
         setMessage('System preferences saved locally. Reload to apply.');
+        if (onThemeChange) onThemeChange(theme);
     };
 
     return (

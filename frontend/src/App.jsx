@@ -51,6 +51,7 @@ function App() {
     const [toast, setToast] = useState(null);
     const [terminalLogs, setTerminalLogs] = useState([]);
     const [currentPage, setCurrentPage] = useState('dashboard');
+    const [theme, setTheme] = useState(localStorage.getItem('icafe_theme') || 'dark');
 
     const videoPollTimerRef = useRef(null);
     const pusherRef = useRef(null);
@@ -62,6 +63,11 @@ function App() {
             return next.slice(0, 50);
         });
     }, []);
+
+    useEffect(() => {
+        document.documentElement.classList.toggle('light', theme === 'light');
+        document.documentElement.classList.toggle('dark', theme === 'dark');
+    }, [theme]);
 
     // ---- Data Fetching ----
     const loadPcs = useCallback(async () => {
@@ -516,7 +522,7 @@ function App() {
     };
 
     return (
-        <div className="min-h-screen bg-[#0f172a] flex selection:bg-indigo-500/30 selection:text-indigo-200">
+        <div className={`min-h-screen flex selection:bg-indigo-500/30 selection:text-indigo-200 ${theme === 'dark' ? 'bg-[#0f172a] text-white' : 'bg-slate-100 text-slate-900'}`}>
             {/* Ambient Background Effects */}
             <div className="fixed inset-0 pointer-events-none overflow-hidden">
                 <div className="absolute -top-[10%] -left-[10%] w-[40%] h-[40%] bg-indigo-600/10 rounded-full blur-[120px] animate-pulse-slow" />
@@ -679,7 +685,10 @@ function App() {
                 </main>
                     </>
                 ) : currentPage === 'system' ? (
-                    <SystemPrefs />
+                    <SystemPrefs onThemeChange={(selectedTheme) => {
+                        setTheme(selectedTheme);
+                        localStorage.setItem('icafe_theme', selectedTheme);
+                    }} />
                 ) : (
                     <TerminalActivity terminalLogs={terminalLogs} onClear={() => setTerminalLogs([])} />
                 )}
