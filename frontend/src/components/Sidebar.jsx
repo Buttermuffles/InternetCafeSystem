@@ -1,7 +1,7 @@
 import { useState } from 'react';
-import { LayoutDashboard, Settings, Trash2, Recycle, Lock, Server, Menu, X } from 'lucide-react';
+import { LayoutDashboard, Settings, Trash2, Recycle, Lock, Server, Menu, X, Terminal } from 'lucide-react';
 
-function Sidebar({ pcs, handleCommand, showToast }) {
+function Sidebar({ pcs, handleCommand, showToast, currentPage, setCurrentPage }) {
     const [mobileOpen, setMobileOpen] = useState(false);
     
     const handleBulkCommand = (commandType, commandLabel) => {
@@ -29,15 +29,30 @@ function Sidebar({ pcs, handleCommand, showToast }) {
                     <h3 className="text-[10px] font-black text-slate-600 uppercase tracking-[0.2em] mb-4 px-2">Navigation</h3>
                     <ul className="space-y-3">
                         <li>
-                            <button className="w-full flex items-center gap-4 text-indigo-400 p-4 rounded-[1.5rem] transition-all bg-indigo-500/5 shadow-inner border border-indigo-500/10">
+                            <button
+                                onClick={() => setCurrentPage('dashboard')}
+                                className={`w-full flex items-center gap-4 p-4 rounded-[1.5rem] transition-all ${currentPage === 'dashboard' ? 'bg-indigo-500/20 text-indigo-200 border border-indigo-400' : 'text-indigo-400 bg-indigo-500/5 border border-indigo-500/10'}`}
+                            >
                                 <LayoutDashboard size={20} />
                                 <span className="font-bold text-sm">Dashboard</span>
                             </button>
                         </li>
                         <li>
-                            <button className="w-full flex items-center gap-4 text-slate-500 hover:text-white p-4 rounded-[1.5rem] transition-all hover:bg-white/5">
+                            <button
+                                onClick={() => setCurrentPage('system')}
+                                className={`w-full flex items-center gap-4 p-4 rounded-[1.5rem] transition-all ${currentPage === 'system' ? 'bg-sky-500/20 text-sky-200 border border-sky-400' : 'text-slate-500 hover:text-white hover:bg-white/5'}`}
+                            >
                                 <Settings size={20} />
                                 <span className="font-bold text-sm">System Prefs</span>
+                            </button>
+                        </li>
+                        <li>
+                            <button
+                                onClick={() => setCurrentPage('terminal')}
+                                className={`w-full flex items-center gap-4 p-4 rounded-[1.5rem] transition-all ${currentPage === 'terminal' ? 'bg-emerald-500/20 text-emerald-200 border border-emerald-400' : 'text-slate-500 hover:text-white hover:bg-white/5'}`}
+                            >
+                                <Terminal size={20} />
+                                <span className="font-bold text-sm">Terminal Activity</span>
                             </button>
                         </li>
                     </ul>

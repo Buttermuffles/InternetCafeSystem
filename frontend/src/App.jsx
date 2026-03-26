@@ -11,6 +11,8 @@ import VideoModal from './components/VideoModal';
 import ComputerViewModal from './components/ComputerViewModal';
 import ProcessModal from './components/ProcessModal';
 import ActionConfirmModal from './components/ActionConfirmModal';
+import SystemPrefs from './components/SystemPrefs';
+import TerminalActivity from './components/TerminalActivity';
 import api, { fetchPcs, sendCommand, fetchLatestVideo, fetchPc, fetchStreamFrame, fetchStreamFrames, postWebRTCOffer, getWebRTCAnswer, fetchCommandResult } from './services/api';
 
 /**
@@ -48,6 +50,7 @@ function App() {
     // Toast notification
     const [toast, setToast] = useState(null);
     const [terminalLogs, setTerminalLogs] = useState([]);
+    const [currentPage, setCurrentPage] = useState('dashboard');
 
     const videoPollTimerRef = useRef(null);
     const pusherRef = useRef(null);
@@ -522,19 +525,27 @@ function App() {
             </div>
 
             {/* Sidebar */}
-            <Sidebar pcs={pcs} handleCommand={handleCommand} showToast={showToast} />
+            <Sidebar
+                pcs={pcs}
+                handleCommand={handleCommand}
+                showToast={showToast}
+                currentPage={currentPage}
+                setCurrentPage={setCurrentPage}
+            />
 
             {/* Main Content */}
             <div className="relative z-10 lg:ml-72 flex-1 flex flex-col min-w-0">
                 <Header lastUpdate={lastUpdate} error={error} />
                 <StatsBar stats={stats} />
 
-                {/* PanCafe-Style Master Control Bar */}
-                <div className="max-w-[1700px] mx-auto px-4 sm:px-6 mb-8">
-                    <div className="clay-card-flat bg-indigo-500/5 border border-indigo-500/10 p-3 sm:p-4 flex flex-wrap items-center justify-between gap-4">
-                        <div className="flex items-center gap-3">
-                            <div className="p-2 rounded-xl bg-indigo-500 text-white shadow-lg">
-                                <Zap size={18} className="animate-pulse" />
+                {currentPage === 'dashboard' ? (
+                    <>
+                        {/* PanCafe-Style Master Control Bar */}
+                        <div className="max-w-[1700px] mx-auto px-4 sm:px-6 mb-8">
+                            <div className="clay-card-flat bg-indigo-500/5 border border-indigo-500/10 p-3 sm:p-4 flex flex-wrap items-center justify-between gap-4">
+                                <div className="flex items-center gap-3">
+                                    <div className="p-2 rounded-xl bg-indigo-500 text-white shadow-lg">
+                                        <Zap size={18} className="animate-pulse" />
                             </div>
                             <div>
                                 <h3 className="text-sm font-black text-white uppercase tracking-wider">Master Control</h3>
@@ -590,29 +601,6 @@ function App() {
                             >
                                 <Power size={12} /> Shutdown {selectedPcs.length || 'All'}
                             </button>
-                        </div>
-                    </div>
-                </div>
-
-                <div className="max-w-[1700px] mx-auto px-4 sm:px-6 mb-6">
-                    <div className="clay-card-flat bg-slate-900/70 border border-white/10 p-4 h-64 overflow-auto">
-                        <div className="flex items-center justify-between mb-3">
-                            <h2 className="text-sm font-black text-white uppercase tracking-wider">Terminal Activity</h2>
-                            <span className="text-[10px] text-slate-400 uppercase tracking-widest">Last 50 events</span>
-                        </div>
-                        <div className="bg-black/30 rounded-xl p-2 h-[calc(100%-1.25rem)] overflow-y-auto">
-                            {terminalLogs.length === 0 ? (
-                                <p className="text-[11px] text-slate-500">No terminal calls or fetch events yet.</p>
-                            ) : (
-                                <ul className="space-y-1 text-[11px] font-mono text-slate-300">
-                                    {terminalLogs.map((log, idx) => (
-                                        <li key={idx} className="flex justify-between gap-2">
-                                            <span className="text-slate-400">[{log.timestamp}]</span>
-                                            <span className="truncate">{log.entry}</span>
-                                        </li>
-                                    ))}
-                                </ul>
-                            )}
                         </div>
                     </div>
                 </div>
@@ -689,6 +677,12 @@ function App() {
                         />
                     )}
                 </main>
+                    </>
+                ) : currentPage === 'system' ? (
+                    <SystemPrefs />
+                ) : (
+                    <TerminalActivity terminalLogs={terminalLogs} onClear={() => setTerminalLogs([])} />
+                )}
             </div>
 
             {/* Modals & Overlays */}
