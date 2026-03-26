@@ -1,19 +1,15 @@
 import React, { useState, useEffect } from 'react';
 
 function SystemPrefs() {
-    const [apiUrl, setApiUrl] = useState('');
-    const [apiKey, setApiKey] = useState('');
     const [pollInterval, setPollInterval] = useState(8000);
-    const [pusherKey, setPusherKey] = useState('');
-    const [pusherCluster, setPusherCluster] = useState('');
+    const [theme, setTheme] = useState('dark');
+    const [showOffline, setShowOffline] = useState(true);
     const [message, setMessage] = useState('');
 
     useEffect(() => {
-        setApiUrl(localStorage.getItem('icafe_api_url') || '');
-        setApiKey(localStorage.getItem('icafe_api_key') || '');
         setPollInterval(parseInt(localStorage.getItem('icafe_poll_interval') || '8000', 10));
-        setPusherKey(localStorage.getItem('icafe_pusher_key') || '');
-        setPusherCluster(localStorage.getItem('icafe_pusher_cluster') || '');
+        setTheme(localStorage.getItem('icafe_theme') || 'dark');
+        setShowOffline(localStorage.getItem('icafe_show_offline') !== 'false');
     }, []);
 
     const handleSave = (e) => {
@@ -27,32 +23,14 @@ function SystemPrefs() {
     };
 
     return (
-        <div className="max-w-[1100px] mx-auto p-6">
-            <div className="clay-card-flat bg-slate-900/70 border border-white/10 p-6">
+        <div className="w-full mx-auto p-6">
+            <div className="clay-card-flat bg-slate-900/70 border border-white/10 p-6 w-full">
                 <h2 className="text-xl font-black text-white mb-2">System Preferences</h2>
                 <p className="text-sm text-slate-300 mb-6">Configure connection and realtime settings for the dashboard.</p>
 
                 <form className="space-y-4" onSubmit={handleSave}>
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                        <div>
-                            <label className="text-xs font-black uppercase tracking-wider text-slate-400">Backend API URL</label>
-                            <input
-                                value={apiUrl}
-                                onChange={(e) => setApiUrl(e.target.value)}
-                                className="w-full mt-1 p-2 bg-slate-800 border border-white/10 rounded-lg text-sm text-white"
-                                placeholder="http://192.168.1.100:8000"
-                            />
-                        </div>
-                        <div>
-                            <label className="text-xs font-black uppercase tracking-wider text-slate-400">API Key</label>
-                            <input
-                                value={apiKey}
-                                onChange={(e) => setApiKey(e.target.value)}
-                                className="w-full mt-1 p-2 bg-slate-800 border border-white/10 rounded-lg text-sm text-white"
-                                placeholder="icafe-monitor-api-key-..."
-                            />
-                        </div>
-                        <div>
+                        <div className="col-span-full">
                             <label className="text-xs font-black uppercase tracking-wider text-slate-400">Polling interval (ms)</label>
                             <input
                                 type="number"
@@ -63,22 +41,26 @@ function SystemPrefs() {
                             />
                         </div>
                         <div>
-                            <label className="text-xs font-black uppercase tracking-wider text-slate-400">Pusher key</label>
-                            <input
-                                value={pusherKey}
-                                onChange={(e) => setPusherKey(e.target.value)}
+                            <label className="text-xs font-black uppercase tracking-wider text-slate-400">Theme</label>
+                            <select
+                                value={theme}
+                                onChange={(e) => setTheme(e.target.value)}
                                 className="w-full mt-1 p-2 bg-slate-800 border border-white/10 rounded-lg text-sm text-white"
-                                placeholder="28728c9b9070d8da40a3"
-                            />
+                            >
+                                <option value="dark">Dark</option>
+                                <option value="light">Light</option>
+                            </select>
                         </div>
                         <div>
-                            <label className="text-xs font-black uppercase tracking-wider text-slate-400">Pusher cluster</label>
-                            <input
-                                value={pusherCluster}
-                                onChange={(e) => setPusherCluster(e.target.value)}
+                            <label className="text-xs font-black uppercase tracking-wider text-slate-400">Show Offline PCs</label>
+                            <select
+                                value={showOffline ? 'show' : 'hide'}
+                                onChange={(e) => setShowOffline(e.target.value === 'show')}
                                 className="w-full mt-1 p-2 bg-slate-800 border border-white/10 rounded-lg text-sm text-white"
-                                placeholder="ap1"
-                            />
+                            >
+                                <option value="show">Show</option>
+                                <option value="hide">Hide</option>
+                            </select>
                         </div>
                     </div>
 

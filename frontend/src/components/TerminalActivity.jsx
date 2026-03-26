@@ -2,8 +2,8 @@ import React from 'react';
 
 function TerminalActivity({ terminalLogs, onClear }) {
     return (
-        <div className="max-w-[1700px] mx-auto px-4 sm:px-6 pb-6">
-            <div className="clay-card-flat bg-slate-900/70 border border-white/10 p-4">
+        <div className="w-full mx-auto px-4 sm:px-6 pb-6">
+            <div className="clay-card-flat bg-slate-900/70 border border-white/10 p-4 w-full">
                 <div className="flex items-center justify-between mb-3">
                     <h2 className="text-xl font-black text-white uppercase tracking-wider">Terminal Activity</h2>
                     <button
