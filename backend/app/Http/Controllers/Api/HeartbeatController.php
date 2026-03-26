@@ -56,32 +56,19 @@ class HeartbeatController extends Controller
 
     private function broadcastPcUpdate($pc)
     {
-        // For security, only send what's needed for the dashboard lists
+        // Keep existing fallback logic; but use model helper to centralize.
+        $pc->status = $pc->status ?? 'online';
+
         $payload = [
             'pc_name' => $pc->pc_name,
-            'status' => 'online',
+            'status' => $pc->status,
             'ip_address' => $pc->ip_address,
             'cpu_usage' => $pc->cpu_usage,
             'ram_usage' => $pc->ram_usage,
             'last_seen' => $pc->last_seen
         ];
 
-        // Since Pusher library is not yet available, we broadcast via manual HTTP trigger logic if possible
-        // But the easiest/cleanest way is to define it so Laravel can pick it up once broadcast driver is configured.
-        // For now, we manually POST to Pusher just like the agent would.
-        try {
-            $app_id = env('PUSHER_APP_ID');
-            $app_key = env('PUSHER_APP_KEY');
-            $app_secret = env('PUSHER_APP_SECRET');
-            $cluster = env('PUSHER_APP_CLUSTER');
-
-            if ($app_id && $app_key) {
-                $pusher = new \Pusher\Pusher($app_key, $app_secret, $app_id, ['cluster' => $cluster, 'useTLS' => true]);
-                $pusher->trigger('pcs', 'PcUpdated', $payload);
-            }
-        }
-        catch (\Exception $e) {
-        // Silently fail if Pusher client not installed yet
-        }
+        // Reuse PC model broadcast helper for consistency.
+        Pc::broadcastPcStatus($pc);
     }
 }

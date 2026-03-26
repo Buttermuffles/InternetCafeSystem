@@ -162,3 +162,20 @@ gh repo create Buttermuffles/InternetCafeSystem --public --source . --remote ori
 
 If you get `repository not found`, confirm the remote exists at https://github.com/Buttermuffles/InternetCafeSystem and repeat push commands.
 
+---
+
+## 🔁 Realtime online/offline status via server-side Pusher
+
+- Heartbeat endpoint `/api/heartbeat` now broadcasts `PcUpdated` with `status` set to `online`.
+- `Pc::getWithStatus()` marks stale PCs offline after 15s of no heartbeat and broadcasts `PcUpdated` for offline transitions.
+- Dashboard consuming Pusher event `PcUpdated` will reflect status changes immediately.
+
+Ensure env contains correct Pusher keys:
+```
+PUSHER_APP_ID=...
+PUSHER_APP_KEY=...
+PUSHER_APP_SECRET=...
+PUSHER_APP_CLUSTER=...
+```
+
+
