@@ -10,8 +10,10 @@
     --bg-primary: #0f172a;
     --bg-secondary: #1e293b;
     --clay-bg: #1e293b;
+    --clay-border: rgba(255, 255, 255, 0.08);
     --clay-shadow: rgba(0, 0, 0, 0.4);
-    --clay-highlight: rgba(255, 255, 255, 0.05);
+    --text-main: #f8fafc;
+    --card-text: #e2e8f0;
 
     --accent-cyber: #6366f1;
     --accent-emerald: #10b981;
@@ -19,6 +21,26 @@
     --accent-rose: #f43f5e;
     --accent-sky: #0ea5e9;
     --accent-violet: #8b5cf6;
+}
+
+html.light {
+    --bg-primary: #f8fafc;
+    --bg-secondary: #e2e8f0;
+    --clay-bg: #f1f5f9;
+    --clay-border: rgba(148, 163, 184, 0.5);
+    --clay-shadow: rgba(148, 163, 184, 0.3);
+    --text-main: #0f172a;
+    --card-text: #1e293b;
+}
+
+body.dark {
+    background: radial-gradient(circle at 50% 0%, #1e293b 0%, #0f172a 100%);
+    color: var(--text-main);
+}
+
+body.light {
+    background: linear-gradient(130deg, #f8fafc 0%, #e2e8f0 100%);
+    color: var(--text-main);
 }
 
 * {
@@ -29,11 +51,11 @@
 
 body {
     font-family: 'Outfit', 'Inter', system-ui, -apple-system, sans-serif;
-    background: radial-gradient(circle at 50% 0%, #1e293b 0%, #0f172a 100%);
-    color: #f8fafc;
     min-height: 100vh;
     -webkit-font-smoothing: antialiased;
     overflow-x: hidden;
+    background: var(--bg-primary);
+    color: var(--text-main);
 }
 
 :root {
@@ -89,6 +111,7 @@ body {
             inset -6px -6px 20px rgba(255, 255, 255, 0.25),
             inset 6px 6px 16px rgba(15, 23, 42, 0.2);
         transition: all 0.4s ease;
+        color: var(--card-text);
     }
 
     .clay-card:hover {
